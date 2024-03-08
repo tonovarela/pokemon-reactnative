@@ -1,31 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { View } from 'react-native'
+import React, { useContext } from 'react';
+import { StyleSheet, View } from 'react-native'
 
-import { Button, Text } from 'react-native-paper'
 import { getPokemons } from '../../../actions/pokemons';
-
-
+import { PokeBallBg } from '../../components/ui/PokeBallBg';
+import { ThemeContext } from '../../context/ThemeContext';
 export const HomeScreen = () => {
-
-    const { isLoading, data } = useQuery({
+    const {isDark} = useContext(ThemeContext);
+    const { isLoading, data =[] } = useQuery({
         queryKey: ['pokemons'],
-        queryFn:()=> getPokemons(1,5),
+        queryFn:()=> getPokemons(0),
         staleTime: 1000 * 60 * 60 //60 minutos
     });
-
-    console.log(data)
+    
     return (
         <View>
-            <Text variant='displaySmall'>HomeScreen</Text>
-            {
-                isLoading ? (
-                    <Text variant='displaySmall'>Cargando...</Text>
-                ) : (
-                    <Text variant='displaySmall'>{JSON.stringify(data)}</Text>
-                )
-            }
-            {/* <Button mode="contained" onPress={() => console.log('Pressed')}>Press me</Button> */}
+            <PokeBallBg isDark={isDark} style={styles.imgPosition} ></PokeBallBg>
+                    
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    imgPosition:{
+        position: 'absolute',
+        top: -100,
+        right:-100,        
+    }
+})

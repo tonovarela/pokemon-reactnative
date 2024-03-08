@@ -15,7 +15,7 @@ export type RootStackParams = {
 export const StackNavigator = () => {
     const Stack = createStackNavigator<RootStackParams>();
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown:false}}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="PokemonScreen" component={PokemonScreen} />

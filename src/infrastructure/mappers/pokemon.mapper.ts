@@ -2,7 +2,7 @@ import type { Pokemon } from '../../domain/entities/pokemon';
 import type { PokeAPIPokemonResponse } from '../interfaces/pokeApi.interfaces';
 
 export class PokemonMapper {
-  static async pokeApiPokemonToEntity(data: PokeAPIPokemonResponse): Promise<Pokemon> {
+  static  pokeApiPokemonToEntity(data: PokeAPIPokemonResponse): Pokemon {
     const sprites = PokemonMapper.getSprites(data);
     const avatar = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
     const { id, name } = data;
