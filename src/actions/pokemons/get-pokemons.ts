@@ -9,8 +9,8 @@ export const getPokemons = async (page:number,limit=20): Promise<Pokemon[]> => {
         const {data} = await pokeApi.get<PokeAPIPaginatedResponse>(`${url}?offset=${page * 10}&limit=${limit}`);        
         const pokemonPromises = data.results.map((info) => pokeApi.get<PokeAPIPokemonResponse>(info.url));
         const pokemonsResponse = await Promise.all(pokemonPromises);
-        const pokemons= pokemonsResponse.map((item) =>  PokemonMapper.pokeApiPokemonToEntity(item.data));        
-        return pokemons;
+        const pokemonsPromises= pokemonsResponse.map((item) =>  PokemonMapper.pokeApiPokemonToEntity(item.data));        
+        return await Promise.all(pokemonsPromises);
     } catch (error) {
         throw new Error('Error gettins pokemons');
     }

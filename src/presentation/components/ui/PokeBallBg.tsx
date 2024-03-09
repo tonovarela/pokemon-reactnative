@@ -14,7 +14,7 @@ export const PokeBallBg = ({ style ,isDark}: Props) => {
     const pokeImg =  isDark ? require('../../../assets/pokeball-light.png')
                             : require('../../../assets/pokeball-dark.png');                            
 return (    
-        <Image source={pokeImg} style={[{ width: 300, height: 300, opacity: 0.1 }, style]}></Image>
+        <Image source={pokeImg} style={[{ width: 300, height: 300, opacity: 0.3 }, style]}></Image>
     )
 }
 
