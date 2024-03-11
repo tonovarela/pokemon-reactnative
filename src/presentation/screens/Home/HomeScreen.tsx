@@ -4,19 +4,25 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import { getPokemons } from '../../../actions/pokemons';
 import { PokeBallBg } from '../../components/ui/PokeBallBg';
 import { ThemeContext } from '../../context/ThemeContext';
-import { Text } from 'react-native-paper';
+import { FAB, Text, useTheme } from 'react-native-paper';
 import { globalTheme } from '../../../config/theme/global-theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PokemonCard } from '../../components/pokemons/PokemonCard';
 import { Pokemon } from '../../../domain/entities/Pokemon';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../navigator/StackNavigator';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export const HomeScreen = () => {
+interface Props extends StackScreenProps<RootStackParams,'HomeScreen'>{}
+
+export const HomeScreen = ({navigation}:Props) => {
+
+    
     const { top } = useSafeAreaInsets();
+    const theme = useTheme();
     const queryClient =useQueryClient();
     const { isDark } = useContext(ThemeContext);
-    const navigation = useNavigation<NavigationProp<RootStackParams>>();
+///    const navigation = useNavigation<NavigationProp<RootStackParams>>();
     const {   data, fetchNextPage } = useInfiniteQuery({
         queryKey: ['pokemons', 'infinite'],
         initialPageParam: 0,            
@@ -54,6 +60,11 @@ export const HomeScreen = () => {
                 ListHeaderComponent={() => <Text variant='displayMedium'>Pokedex</Text>}
                 data={data?.pages.flat() ?? []}>
             </FlatList>
+
+            <FAB label='Buscar' mode='elevated'
+            onPress={()=>navigation.push('SearchScreen')}
+            color={theme.dark?'black':'white'}             
+            style={[globalTheme.fab,{backgroundColor:theme.colors.primary}]}></FAB>
 
         </View>
     )
